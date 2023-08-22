@@ -10,8 +10,69 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Address {
+  id            String @id
+  street        String
+  number        String
+  neighbourhood String
+  state         String
+  country       String
+
+  registry_office RegistryOffice?
+}
+
+model RegistryOffice {
+  id          String @id
+  name        String
+  logo        String
+  description String
+  document    String
+  phone       String
+
+  clients   User[]
+  employees Employee[]
+
+  address    Address? @relation(fields: [address_id], references: [id])
+  address_id String?  @unique
+}
+
+model Document {
+  id       String @id
+  hash_id  String
+  url      String
+  owner_id String
+  owner    User   @relation(fields: [owner_id], references: [id])
+}
+
+model Employee {
+  id                 String          @id
+  name               String
+  password           String
+  email              String
+  document           String
+  phone              String
+  role               Role
+  registry_office    RegistryOffice? @relation(fields: [registry_office_id], references: [id])
+  registry_office_id String?
+}
+
 model User {
-  id    String @id
-  name  String
-  email String
+  id       String @id
+  name     String
+  password String
+  username String
+  email    String
+  document String
+  phone    String
+
+  documents          Document[]
+  registry_office    RegistryOffice? @relation(fields: [registry_office_id], references: [id])
+  registry_office_id String?
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  EMPLOYEE
+  COMMON
 }
