@@ -1,5 +1,6 @@
+import { HttpModule } from '@infra/http/http.module';
 import { Module } from '@nestjs/common';
-import { ProvidersModule } from '@shared/providers/providers.module';
+import { ProvidersModule } from './shared/providers/providers.module';
 
 @Module({
   imports: [HttpModule, ProvidersModule],

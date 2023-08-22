@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Module } from '@nestjs/common';
-import { BCryptHashProvider } from './HashProvider/implementations/bcrypt-hash-provider';
-import { HashProvider } from './HashProvider/hash-provider';
 import { DateProvider } from './DateProvider/date-provider';
 import { DayjsDateProvider } from './DateProvider/implementations/dayjs-date-provider';
+import { HashProvider } from './HashProvider/hash-provider';
+import { BCryptHashProvider } from './HashProvider/implementations/bcrypt-hash-provider';
 
 @Module({
   imports: [],
