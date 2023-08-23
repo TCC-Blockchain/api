@@ -10,20 +10,12 @@ describe('Create user', () => {
     const createUser = new CreateUser(usersRepository, hashProvider);
 
     const { user } = await createUser.execute({
-      name: 'John',
-      birth_date: JSON.stringify(new Date()),
-      email: 'john@test.com',
-      gender: UserGendersEnum.MALE,
-      password: 'password',
-      neighborhood: 'San Francisco',
-      username: 'john_test',
-      zip_code: '18000999',
-      street: 'St test',
-      number: '132',
-      city: 'San Francisco',
-      country: 'United States',
-      state: 'California',
-      phone: '+55',
+      username: 'test-username',
+      name: 'John Doe',
+      email: 'john@doe.com',
+      password: '123',
+      phone: '+5511999',
+      document: '444444444',
     });
 
     expect(usersRepository.users).toHaveLength(1);

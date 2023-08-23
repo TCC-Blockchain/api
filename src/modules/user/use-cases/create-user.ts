@@ -1,33 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { HashProvider } from '@providers/HashProvider/hash-provider';
 import { Address } from '../entities/addresses';
-import { User, UserGendersEnum } from '../entities/users';
+import { User } from '../entities/users';
 import { UsersRepository } from '../repositories/users-repository';
 import { UserAlreadyExists } from './errors/user-already-exists';
 import { UsernameAlreadyTaken } from './errors/username-already-taken';
 
 interface CreateUserRequest {
   name: string;
-  phone: string;
-  description?: string;
-  birth_date: string;
-  gender: UserGendersEnum;
-  email: string;
-  username: string;
-  image?: string;
   password: string;
-  starred_photos?: string[];
-  url?: string;
-  formatted_address?: string;
-  zip_code: string;
-  street: string;
-  neighborhood: string;
-  number: string;
-  city: string;
-  state: string;
-  country: string;
-  latitude?: number;
-  longitude?: number;
+  username: string;
+  email: string;
+  document: string;
+  phone: string;
 }
 
 interface CreateUserResponse {
@@ -43,27 +28,12 @@ export class CreateUser {
 
   async execute(request: CreateUserRequest): Promise<CreateUserResponse> {
     const {
-      name,
-      birth_date,
-      gender,
+      document,
       email,
-      username,
-      image,
-      phone,
+      name,
       password,
-      zip_code,
-      street,
-      neighborhood,
-      number,
-      city,
-      state,
-      country,
-      formatted_address,
-      url,
-      latitude,
-      longitude,
-      description,
-      starred_photos,
+      phone,
+      username,
     } = request;
 
     const alreadyExists = await this.usersRepository.findUserByEmail(email);
@@ -87,31 +57,11 @@ export class CreateUser {
       name,
       email,
       password: hashedPassword,
-      gender,
-      birth_date: new Date(birth_date),
-      image,
       phone,
-      description,
-      starred_photos: starred_photos || [],
-      can_access_web: false,
+      document,
     });
 
-    const address = new Address({
-      zip_code,
-      street,
-      number,
-      city,
-      state,
-      country,
-      user_id: user.id,
-      neighborhood,
-      formatted_address: formatted_address,
-      url: url,
-      latitude,
-      longitude,
-    });
-
-    await this.usersRepository.create({ user, address });
+    await this.usersRepository.create(user);
 
     return {
       user,

@@ -10,7 +10,9 @@ export class PrismaUserMapper {
       name: user.name,
       password: user.password,
       username: user.username,
+      document: user.document,
       created_at: user.created_at,
+      updated_at: user.updated_at,
     };
   }
 
@@ -21,11 +23,11 @@ export class PrismaUserMapper {
         name: raw.name,
         password: raw.password,
         username: raw.username,
-        created_at: raw.created_at,
         phone: raw.phone,
-        updated_at: raw.updated_at,
         document: raw.document,
         registry_office_id: raw.registry_office_id,
+        created_at: raw.created_at,
+        updated_at: raw.updated_at,
       },
       raw.id,
     );
