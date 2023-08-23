@@ -1,73 +1,82 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Doc Guard (API REPOSITORY)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Doc Guard is a white label software made to registries offices.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+##### We are still developing this game, so some features are not implemented yet.
 
-## Description
+This API requires [nodejs] to run.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### 💻 Stack
+Current stack of this project
 
-## Installation
+- [nodejs] (Language)
+- [docker] 
+- [nestjs] (Framework to create the structure (Like an Spring Boot))
+- [prisma] (ORM that generates migrations and the interface with the database)
 
-```bash
+### 💻 Tech
+First of all, you should have a postgresql image running, I recommend using [docker]
+
+After installing docker you have to create an image of postgres with docker, you should run this command below:
+
+```sh
+  docker run -d --name postgres-tcc -e POSTGRES_PASSWORD=123456 -p 5432:5432 postgres
+```
+
+This command will generate and start a new docker image running with the latest version of postgres. (May take a while)
+
+If you already created an image with docker, to start you must run (if your docker has a different name replace "postgres-tcc" to your custom name):
+
+```sh
+  docker start postgres-tcc 
+```
+
+After generating the image, you should populate the environment variable inside .env file (if there is no .env file, you must create using .env.example as template)
+
+```sh
+DATABASE_URL="postgresql://postgres:123456@localhost:5432/docguard"
+```
+
+### 🔨 Dependencies
+
+To run this project, you must install all dependecies running the command below inside the repo, then just start the project.
+
+```sh
 $ npm install
 ```
 
-## Running the app
+after installing all dependecies run this command sync all migrations to your database: 
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```sh
+$ npx prisma migrate deploy
 ```
 
-## Test
+If everything worked properly, you must be able to start the application by running:
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```sh
+$ npm run start:dev 
 ```
 
-## Support
+Then the api will start in localhost at:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```sh
+localhost:3000
+```
 
-## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### 📚 About
 
-## License
+Here are the group members:
 
-Nest is [MIT licensed](LICENSE).
+* Leandro Ciric de Souza
+* FILL NAMES HERE
+* FILL NAMES HERE
+
+
+[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
+
+   [nodejs]: <http://nodejs.org>
+   [docker]: <https://www.docker.com/>
+   [prisma]: <https://www.prisma.io/>
+   [nestjs]: <https://nestjs.com/>
+
