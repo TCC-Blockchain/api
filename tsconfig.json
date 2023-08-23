@@ -24,6 +24,7 @@
     "paths": {
       "@modules/*": ["./src/modules/*"],
       "@helpers/*": ["./src/shared/helpers/*"],
+      "@shared/*": ["./src/shared/*"],
       "@infra/*": ["./src/shared/infra/*"],
       "@providers/*": ["./src/shared/providers/*"],
       "@utils/*": ["./src/shared/utils/*"],

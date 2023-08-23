@@ -9,6 +9,8 @@ CREATE TABLE "Address" (
     "neighbourhood" TEXT NOT NULL,
     "state" TEXT NOT NULL,
     "country" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Address_pkey" PRIMARY KEY ("id")
 );
@@ -22,6 +24,8 @@ CREATE TABLE "RegistryOffice" (
     "document" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
     "address_id" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "RegistryOffice_pkey" PRIMARY KEY ("id")
 );
@@ -32,6 +36,8 @@ CREATE TABLE "Document" (
     "hash_id" TEXT NOT NULL,
     "url" TEXT NOT NULL,
     "owner_id" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Document_pkey" PRIMARY KEY ("id")
 );
@@ -46,6 +52,8 @@ CREATE TABLE "Employee" (
     "phone" TEXT NOT NULL,
     "role" "Role" NOT NULL,
     "registry_office_id" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Employee_pkey" PRIMARY KEY ("id")
 );
@@ -60,12 +68,29 @@ CREATE TABLE "User" (
     "document" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
     "registry_office_id" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "UserTokens" (
+    "id" TEXT NOT NULL,
+    "token" TEXT NOT NULL,
+    "user_id" TEXT,
+    "expires_at" TIMESTAMP(3) NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "UserTokens_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "RegistryOffice_address_id_key" ON "RegistryOffice"("address_id");
+
+-- CreateIndex
+CREATE INDEX "FKUserToken" ON "UserTokens"("user_id");
 
 -- AddForeignKey
 ALTER TABLE "RegistryOffice" ADD CONSTRAINT "RegistryOffice_address_id_fkey" FOREIGN KEY ("address_id") REFERENCES "Address"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -78,3 +103,6 @@ ALTER TABLE "Employee" ADD CONSTRAINT "Employee_registry_office_id_fkey" FOREIGN
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_registry_office_id_fkey" FOREIGN KEY ("registry_office_id") REFERENCES "RegistryOffice"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserTokens" ADD CONSTRAINT "UserTokens_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

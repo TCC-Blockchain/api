@@ -19,6 +19,9 @@ model Address {
   country       String
 
   registry_office RegistryOffice?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model RegistryOffice {
@@ -34,6 +37,9 @@ model RegistryOffice {
 
   address    Address? @relation(fields: [address_id], references: [id])
   address_id String?  @unique
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model Document {
@@ -42,6 +48,9 @@ model Document {
   url      String
   owner_id String
   owner    User   @relation(fields: [owner_id], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model Employee {
@@ -54,6 +63,9 @@ model Employee {
   role               Role
   registry_office    RegistryOffice? @relation(fields: [registry_office_id], references: [id])
   registry_office_id String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model User {
@@ -68,6 +80,22 @@ model User {
   documents          Document[]
   registry_office    RegistryOffice? @relation(fields: [registry_office_id], references: [id])
   registry_office_id String?
+  tokens             UserTokens[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model UserTokens {
+  id         String   @id
+  token      String
+  user_id    String?
+  expires_at DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user       User?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id], map: "FKUserToken")
 }
 
 enum Role {
