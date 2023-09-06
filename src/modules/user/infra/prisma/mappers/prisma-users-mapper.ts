@@ -21,13 +21,13 @@ export class PrismaUserMapper {
       {
         email: raw.email,
         name: raw.name,
-        password: raw.password,
         username: raw.username,
         phone: raw.phone,
         document: raw.document,
-        registry_office_id: raw.registry_office_id,
+        registry_office_id: raw.registry_office_id || undefined,
         created_at: raw.created_at,
         updated_at: raw.updated_at,
+        password: raw.password,
       },
       raw.id,
     );

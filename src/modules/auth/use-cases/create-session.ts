@@ -7,7 +7,6 @@ import { jwtConstants } from '../constants';
 import { UserToken } from '../entities/users-tokens';
 import { UsersTokensRepository } from '../repositories/users-tokens-repository';
 import { UserNotFound } from './errors/user-not-found';
-import { UserNotAllowed } from './errors/user-not-allowed';
 
 interface CreateSessionResponse {
   access_token: string;
@@ -24,14 +23,7 @@ export class CreateSession {
     private usersRepository: UsersRepository,
   ) {}
 
-  async execute(
-    request_user: User,
-    from: 'WEBSITE' | 'APP' = 'APP',
-  ): Promise<CreateSessionResponse> {
-    if (from === 'WEBSITE' && !request_user.can_access_web) {
-      throw new UserNotAllowed();
-    }
-
+  async execute(request_user: User): Promise<CreateSessionResponse> {
     const refreshToken = this.jwtService.sign(
       {
         username: request_user.username,

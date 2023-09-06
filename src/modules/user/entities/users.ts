@@ -11,8 +11,7 @@ export interface UserProps {
   phone: string;
   created_at: Date;
   updated_at?: Date;
-
-  registry_office_id: string;
+  registry_office_id?: string;
 }
 
 export class User {
@@ -91,7 +90,7 @@ export class User {
     this.props.registry_office_id = registry_office_id;
   }
 
-  public get registry_office_id(): string {
+  public get registry_office_id(): string | undefined {
     return this.props.registry_office_id;
   }
 
