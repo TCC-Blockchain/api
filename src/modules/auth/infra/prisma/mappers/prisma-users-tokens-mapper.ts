@@ -1,4 +1,4 @@
-import { UserToken } from '@modules/auth/entities/users-tokens';
+import { UserToken } from '@modules/auth/entities/user-tokens';
 import { UserTokens as RawUserTokens } from '@prisma/client';
 
 export class PrismaUserTokensMapper {

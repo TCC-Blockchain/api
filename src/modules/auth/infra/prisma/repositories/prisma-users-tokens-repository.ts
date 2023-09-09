@@ -1,5 +1,5 @@
 import { PrismaService } from '@infra/database/prisma/prisma.service';
-import { UserToken } from '@modules/auth/entities/users-tokens';
+import { UserToken } from '@modules/auth/entities/user-tokens';
 import { UsersTokensRepository } from '@modules/auth/repositories/users-tokens-repository';
 import { Injectable } from '@nestjs/common';
 import { PrismaUserTokensMapper } from '../mappers/prisma-users-tokens-mapper';

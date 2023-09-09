@@ -1,4 +1,4 @@
-import { UserToken } from '../entities/users-tokens';
+import { UserToken } from '../entities/user-tokens';
 
 export abstract class UsersTokensRepository {
   abstract create(userToken: UserToken): Promise<void>;

@@ -1,10 +1,10 @@
-import { User } from '@modules/user/entities/users';
+import { User } from '@modules/user/entities/user';
 import { UsersRepository } from '@modules/user/repositories/users-repository';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { DateProvider } from '@providers/DateProvider/date-provider';
 import { jwtConstants } from '../constants';
-import { UserToken } from '../entities/users-tokens';
+import { UserToken } from '../entities/user-tokens';
 import { UsersTokensRepository } from '../repositories/users-tokens-repository';
 import { UserNotFound } from './errors/user-not-found';
 

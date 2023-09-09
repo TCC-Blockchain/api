@@ -1,6 +1,5 @@
 import { BCryptHashProvider } from '@providers/HashProvider/implementations/bcrypt-hash-provider';
 import { InMemoryUsersRepository } from '../../../../test/repositories/in-memory-users-repository';
-import { UserGendersEnum } from '../entities/users';
 import { CreateUser } from './create-user';
 
 describe('Create user', () => {

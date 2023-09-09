@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { HashProvider } from '@providers/HashProvider/hash-provider';
-import { User } from '../entities/users';
+import { User } from '../entities/user';
 import { UsersRepository } from '../repositories/users-repository';
 import { UserAlreadyExists } from './errors/user-already-exists';
 

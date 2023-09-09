@@ -1,4 +1,4 @@
-import { User } from '@modules/user/entities/users';
+import { User } from '@modules/user/entities/user';
 import { UsersRepository } from '@modules/user/repositories/users-repository';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { HashProvider } from '@providers/HashProvider/hash-provider';
@@ -22,6 +22,8 @@ export class AuthService {
       password,
       user.password,
     );
+
+    console.log(user);
 
     if (!hasPasswordMatched) {
       throw new UnauthorizedException();
