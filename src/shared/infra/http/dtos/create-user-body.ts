@@ -5,9 +5,6 @@ export class CreateUserBody {
   name: string;
 
   @IsNotEmpty()
-  birth_date: string;
-
-  @IsNotEmpty()
   phone: string;
 
   @IsNotEmpty()

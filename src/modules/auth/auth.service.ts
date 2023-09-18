@@ -23,8 +23,6 @@ export class AuthService {
       user.password,
     );
 
-    console.log(user);
-
     if (!hasPasswordMatched) {
       throw new UnauthorizedException();
     }
