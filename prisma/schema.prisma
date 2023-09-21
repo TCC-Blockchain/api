@@ -17,6 +17,7 @@ model Address {
   neighbourhood String
   state         String
   country       String
+  postal_code   String
 
   registry_office RegistryOffice?
 
