@@ -1,7 +1,7 @@
 import { CreateUser } from '@modules/user/use-cases/create-user';
 import { GetUserByEmail } from '@modules/user/use-cases/get-user-by-email';
 import { GetUserById } from '@modules/user/use-cases/get-user-by-id';
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { Public } from '@shared/utils/public-decorator';
 import { CreateUserBody } from '../dtos/create-user-body';
 import { UserViewModel } from '../view-models/user-view-model';
@@ -41,7 +41,6 @@ export class UsersController {
   }
 
   @Get('/:id')
-  @Public()
   async getUserId(@Param('id') id) {
 
     const { user } = await this.getUserById.execute({id});
@@ -51,9 +50,8 @@ export class UsersController {
     };
   }
 
-  @Get('/:email')
-  @Public()
-  async getUserEmail(@Param('email') email) {
+  @Get('/')
+  async getUserEmail(@Query('email') email) {
 
     const { user } = await this.getUserByEmail.execute({email});
     
