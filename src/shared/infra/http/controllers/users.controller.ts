@@ -8,9 +8,11 @@ import { UserViewModel } from '../view-models/user-view-model';
 
 @Controller('users')
 export class UsersController {
-  constructor(private createUser: CreateUser, 
+  constructor(
+    private createUser: CreateUser,
     private getUserByEmail: GetUserByEmail,
-    private getUserById: GetUserById) {}
+    private getUserById: GetUserById,
+  ) {}
 
   @Post()
   @Public()
@@ -40,24 +42,21 @@ export class UsersController {
     };
   }
 
-  @Get('/:id')
-  async getUserId(@Param('id') id) {
-
-    const { user } = await this.getUserById.execute({id});
+  @Get('/')
+  async getUserEmail(@Query('email') email: string) {
+    const { user } = await this.getUserByEmail.execute({ email });
 
     return {
       user: UserViewModel.toHTTP(user),
     };
   }
 
-  @Get('/')
-  async getUserEmail(@Query('email') email) {
+  @Get('/:id')
+  async getUserId(@Param('id') id: string) {
+    const { user } = await this.getUserById.execute({ id });
 
-    const { user } = await this.getUserByEmail.execute({email});
-    
     return {
       user: UserViewModel.toHTTP(user),
     };
-
   }
 }
