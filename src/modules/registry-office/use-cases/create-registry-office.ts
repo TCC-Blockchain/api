@@ -6,9 +6,12 @@ import { RegistryOfficeAlreadyExists } from "./errors/registry-office-already-ex
 interface CreateRegistryOfficeRequest {
     name: string;
     description: string;
+    logo: string;
     address_id: string;
     document: string;
     phone: string;
+    created_at: Date;
+    updated_at: Date;
 }
 
 interface CreateRegistryOfficeResponse {
@@ -24,10 +27,13 @@ export class CreateRegistryOffice {
     async execute(request: CreateRegistryOfficeRequest): Promise<CreateRegistryOfficeResponse> {
         const {
             name,
+            logo,
             description,
             address_id,
             document,
             phone,
+            created_at,
+            updated_at,
         } = request;
 
         const alreadyExists = await this.registryOfficesRepository.findRegistryOfficeByName(name);
@@ -38,10 +44,13 @@ export class CreateRegistryOffice {
 
         const registry_office = new RegistryOffice({
             name,
+            logo,
             description,
             address_id,
             document,
             phone,
+            created_at,
+            updated_at,
         })
 
         await this.registryOfficesRepository.create(registry_office);

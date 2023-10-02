@@ -1,4 +1,4 @@
-import { RegistryOffice } from "@modules/user/entities/registry-office";
+import { RegistryOffice } from "@modules/registry-office/entities/registry-office";
 import { RegistryOffice as RawRegistryOffice } from "@prisma/client";
 
 export class PrismaRegistryOfficeMapper {

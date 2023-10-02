@@ -1,6 +1,6 @@
-import { CreateRegistryOffice } from "@modules/user/use-cases/create-registry-office";
-import { GetRegistryOfficeById } from "@modules/user/use-cases/get-registry-office-by-id";
-import { GetRegistryOfficeByName } from "@modules/user/use-cases/get-registry-office-by-name";
+import { CreateRegistryOffice } from "@modules/registry-office/use-cases/create-registry-office";
+import { GetRegistryOfficeById } from "@modules/registry-office/use-cases/get-registry-office-by-id";
+import { GetRegistryOfficeByName } from "@modules/registry-office/use-cases/get-registry-office-by-name";
 import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { Public } from "@shared/utils/public-decorator";
 import { RegistryOfficeViewModel } from "../view-models/registry-office-view-model";

@@ -1,5 +1,5 @@
-import { RegistryOffice } from "@modules/user/entities/registry-office";
-import { RegistryOfficesRepository } from "@modules/user/repositories/registry-offices-repository";
+import { RegistryOffice } from "@modules/registry-office/entities/registry-office";
+import { RegistryOfficesRepository } from "@modules/registry-office/repositories/registry-offices-repository";
 import { PrismaService } from "@shared/infra/database/prisma/prisma.service";
 import { PrismaRegistryOfficeMapper } from "../mappers/prisma-registry-offices-mapper";
 import { Injectable } from "@nestjs/common";

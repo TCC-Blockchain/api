@@ -1,4 +1,4 @@
-import { RegistryOffice } from "@modules/user/entities/registry-office";
+import { RegistryOffice } from "@modules/registry-office/entities/registry-office";
 
 export class RegistryOfficeViewModel {
     static toHTTP(registry_office: RegistryOffice) {
