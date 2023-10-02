@@ -3,10 +3,13 @@ import { randomUUID } from "crypto";
 export interface RegistryOfficeProps {
     id?: string;
     name: string;
+    logo: string;
     description: string;
     address_id?: string;
     document: string;
     phone: string;
+    created_at: Date;
+    updated_at: Date;
 }
 
 export class RegistryOffice {
@@ -29,6 +32,14 @@ export class RegistryOffice {
 
     public get name(): string {
         return this.props.name;
+    }
+
+    public set logo(logo: string) {
+        this.props.logo = logo;
+    }
+
+    public get logo(): string {
+        return this.props.logo;
     }
 
     public set description(description: string) {
@@ -61,5 +72,21 @@ export class RegistryOffice {
 
     public get phone(): string {
         return this.props.phone;
+    }
+
+    public set created_at(created_at: Date) {
+        this.props.created_at = created_at;
+    }
+    
+    public get created_at(): Date {
+        return this.props.created_at;
+    }
+
+    public set updated_at(updated_at: Date) {
+        this.props.updated_at = updated_at;
+    }
+    
+    public get updated_at(): Date {
+        return this.props.updated_at;
     }
 }
