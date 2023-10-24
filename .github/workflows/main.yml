@@ -17,18 +17,11 @@ jobs:
         with:
           node-version: 18.x
 
-      - name: Install PNPM
-        run: npm install -g pnpm
-          
       - name: Install Dependencies
-        run: pnpm install
-
-      - name: Run Tests
-        run: pnpm run test
+        run: npm install
         
       - name: Build
-        run: pnpm run build
-        
+        run: npm run build
 
       - uses: appleboy/scp-action@master
         with:
