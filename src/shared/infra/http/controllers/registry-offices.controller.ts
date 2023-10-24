@@ -1,15 +1,13 @@
 import { CreateRegistryOffice } from '@modules/registry-office/use-cases/create-registry-office';
+import { DeleteRegistryOffice } from '@modules/registry-office/use-cases/delete-registry-office';
 import { GetRegistryOfficeById } from '@modules/registry-office/use-cases/get-registry-office-by-id';
 import { GetRegistryOfficeByName } from '@modules/registry-office/use-cases/get-registry-office-by-name';
+import { UpdateRegistryOffice } from '@modules/registry-office/use-cases/update-registry-office';
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { Public } from '@shared/utils/public-decorator';
-import { RegistryOfficeViewModel } from '../view-models/registry-office-view-model';
 import { CreateRegistryOfficeBody } from '../dtos/create-registry-office-body';
-import { DeleteRegistryOffice } from '@modules/registry-office/use-cases/delete-registry-office';
-import { UpdateRegistryOffice } from '@modules/registry-office/use-cases/update-registry-office';
 import { UpdateRegistryOfficeBody } from '../dtos/update-registry-office-body';
-
-
+import { RegistryOfficeViewModel } from '../view-models/registry-office-view-model';
 
 @Controller('registry-offices')
 export class RegistryOfficesController {
@@ -87,16 +85,11 @@ export class RegistryOfficesController {
   }
 
   @Put()
-  async UpdateRegistryOffice(@Param('id') id, @Body() body: UpdateRegistryOfficeBody) {
-
-    const {
-      name,
-      description,
-      logo,
-      address_id,
-      document,
-      phone,
-    } = body;
+  async UpdateRegistryOffice(
+    @Param('id') id,
+    @Body() body: UpdateRegistryOfficeBody,
+  ) {
+    const { name, description, logo, address_id, document, phone } = body;
 
     const { registry_office } = await this.updateRegistryOffice.execute({
       id,
@@ -111,6 +104,5 @@ export class RegistryOfficesController {
     return {
       registry_office: RegistryOfficeViewModel.toHTTP(registry_office),
     };
-
   }
 }

@@ -14,5 +14,6 @@ export abstract class RegistryOfficesRepository {
     description: string,
     address_id: string | undefined,
     document: string,
-    phone: string ): Promise<RegistryOffice | null>;
+    phone: string,
+  ): Promise<RegistryOffice | null>;
 }

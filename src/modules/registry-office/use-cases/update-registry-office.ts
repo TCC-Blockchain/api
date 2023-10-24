@@ -23,26 +23,27 @@ export class UpdateRegistryOffice {
 
   async execute(
     request: UpdateRegistryOfficeRequest,
-    ): Promise<UpdateRegistryOfficeResponse> {
-      const { id, name, logo, description, address_id, document, phone } = request;
+  ): Promise<UpdateRegistryOfficeResponse> {
+    const { id, name, logo, description, address_id, document, phone } =
+      request;
 
-      const registry_office = await this.registryOfficesRepository.updateRegistryOffice(
+    const registry_office =
+      await this.registryOfficesRepository.updateRegistryOffice(
         id,
         name,
         logo,
         description,
         address_id,
         document,
-        phone
+        phone,
       );
 
-      if (!registry_office) {
-        throw new RegistryOfficeNotFound();
-      }
-
-      return {
-        registry_office,
-      };
-
+    if (!registry_office) {
+      throw new RegistryOfficeNotFound();
     }
+
+    return {
+      registry_office,
+    };
+  }
 }
