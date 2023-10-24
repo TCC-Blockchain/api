@@ -8,7 +8,12 @@ interface UpdateRegistryOfficeRequest {
   name: string;
   logo: string;
   description: string;
-  address_id?: string;
+  street: string;
+  number: string;
+  neighborhood: string;
+  state: string;
+  country: string;
+  postal_code: string;
   document: string;
   phone: string;
   created_at: Date;
@@ -25,35 +30,33 @@ export class UpdateRegistryOffice {
 
   async execute(
     request: UpdateRegistryOfficeRequest,
-    ): Promise<UpdateRegistryOfficeResponse> {
-      const {
-         id,
-         name,
-         logo,
-         description,
-         address_id,
-         document,
-         phone,
-         created_at,
-         updated_at } = request;
+  ): Promise<UpdateRegistryOfficeResponse> {
+    const {
+      id,
+      name,
+      logo,
+      description,
+      street,
+      number,
+      neighborhood,
+      state,
+      country,
+      postal_code,
+      document,
+      phone,
+      created_at,
+      updated_at,
+    } = request;
 
-
-      const registry_office = new RegistryOffice({
-        name,
-        logo,
-        description,
-        address_id,
-        document,
-        phone,
-        created_at,
-        updated_at,
-      });
-
-      await this.registryOfficesRepository.updateRegistryOffice(registry_office);
-
+    const registry_office =
+      await this.registryOfficesRepository.findRegistryOfficeById(id);
 
     if (!registry_office) {
       throw new RegistryOfficeNotFound();
+    } else {
+      await this.registryOfficesRepository.updateRegistryOffice(
+        registry_office,
+      );
     }
 
     return {

@@ -73,7 +73,7 @@ export class PrismaRegistryOfficesRepository
     return registry_office;
   }
 
-  async updateRegistryOffice(id: string, name: string, logo: string, description: string, address_id: string | undefined, document: string, phone: string): Promise<RegistryOffice | null> {
+  async updateRegistryOffice(id: string, name: string, logo: string, description: string, street: string, number: string, neighborhood: string, state: string, country: string, postal_code: string, document: string, phone: string, created_at: Date, updated_at: Date): Promise<RegistryOffice  | null> {
       const updateRegistryOffice = await this.prisma.registryOffice.update({
         where: {
           id,
@@ -82,9 +82,16 @@ export class PrismaRegistryOfficesRepository
           name,
           logo,
           description,
-          address_id,
+          street,
+          number,
+          neighborhood,
+          state,
+          country,
+          postal_code,
           document,
-          phone
+          phone,
+          created_at,
+          updated_at,
         }
       });
 

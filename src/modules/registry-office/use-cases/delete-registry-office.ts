@@ -21,10 +21,12 @@ export class DeleteRegistryOffice {
     const { id } = request;
 
     const registry_office =
-      await this.registryOfficesRepository.deleteRegistryOffice(id);
+      await this.registryOfficesRepository.findRegistryOfficeById(id);
 
     if (!registry_office) {
       throw new RegistryOfficeNotFound();
+    } else {
+      await this.registryOfficesRepository.deleteRegistryOffice(id);
     }
 
     return {
