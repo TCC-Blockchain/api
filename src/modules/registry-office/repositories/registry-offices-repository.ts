@@ -7,5 +7,5 @@ export abstract class RegistryOfficesRepository {
     name: string,
   ): Promise<RegistryOffice | null>;
   abstract deleteRegistryOffice(id: string): Promise<RegistryOffice | null>;
-  abstract updateRegistryOffice( registry_office: RegistryOffice): Promise<RegistryOffice>;
+  abstract updateRegistryOffice(registry_office: RegistryOffice): Promise<void>;
 }

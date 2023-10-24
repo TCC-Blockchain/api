@@ -1,4 +1,6 @@
 import { randomUUID } from 'crypto';
+import { Address } from './address';
+import { Replace } from '@helpers/Replace';
 
 export interface RegistryOfficeProps {
   id?: string;
@@ -6,19 +8,31 @@ export interface RegistryOfficeProps {
   logo: string;
   description: string;
   address_id?: string;
+  address?: Address;
   document: string;
   phone: string;
   created_at: Date;
-  updated_at: Date;
+  updated_at?: Date;
 }
 
 export class RegistryOffice {
   private _id: string;
   private props: RegistryOfficeProps;
 
-  constructor(props: RegistryOfficeProps, id?: string) {
+  constructor(
+    props: Replace<
+      RegistryOfficeProps,
+      {
+        created_at?: Date;
+      }
+    >,
+    id?: string,
+  ) {
     this._id = id ?? randomUUID();
-    this.props = props;
+    this.props = {
+      ...props,
+      created_at: props.created_at || new Date(),
+    };
   }
 
   public get id(): string {
@@ -49,8 +63,9 @@ export class RegistryOffice {
     return this.props.description;
   }
 
-  public set address_id(address_id: string) {
-    this.props.address_id = address_id;
+  public updateAddress(address: Address) {
+    this.props.address_id = address.id;
+    this.props.address = address;
   }
 
   public get address_id(): string | undefined {
@@ -85,7 +100,7 @@ export class RegistryOffice {
     this.props.updated_at = updated_at;
   }
 
-  public get updated_at(): Date {
+  public get updated_at(): Date | undefined {
     return this.props.updated_at;
   }
 }

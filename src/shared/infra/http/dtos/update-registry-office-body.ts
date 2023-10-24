@@ -1,7 +1,6 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty } from 'class-validator';
 
 export class UpdateRegistryOfficeBody {
-
   @IsNotEmpty()
   name: string;
 
@@ -34,11 +33,4 @@ export class UpdateRegistryOfficeBody {
 
   @IsNotEmpty()
   phone: string;
-
-  @IsNotEmpty()
-  created_at: Date;
-
-  @IsNotEmpty()
-  updated_at: Date;
-
 }
