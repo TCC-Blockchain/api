@@ -4,6 +4,7 @@ services:
   postgres:
     container_name: doc-guard
     image: postgres
+    restart: always
     ports:
       - 5432:5432
     environment:
