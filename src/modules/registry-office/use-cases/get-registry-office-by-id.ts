@@ -13,6 +13,7 @@ interface GetRegistryOfficeByIdResponse {
 
 @Injectable()
 export class GetRegistryOfficeById {
+
   constructor(private registryOfficesRepository: RegistryOfficesRepository) {}
 
   async execute(

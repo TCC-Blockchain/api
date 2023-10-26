@@ -17,6 +17,7 @@ import { Public } from '@shared/utils/public-decorator';
 import { CreateRegistryOfficeBody } from '../dtos/create-registry-office-body';
 import { UpdateRegistryOfficeBody } from '../dtos/update-registry-office-body';
 import { RegistryOfficeViewModel } from '../view-models/registry-office-view-model';
+import { GetRegistryOffices } from '@modules/registry-office/use-cases/get-registry-offices';
 
 @Controller('registry-offices')
 export class RegistryOfficesController {
@@ -24,6 +25,7 @@ export class RegistryOfficesController {
     private createRegistryOffice: CreateRegistryOffice,
     private getRegistryOfficeById: GetRegistryOfficeById,
     private getRegistryOfficeByName: GetRegistryOfficeByName,
+    private getRegistryOffices: GetRegistryOffices,
     private deleteRegistryOffice: DeleteRegistryOffice,
     private updateRegistryOffice: UpdateRegistryOffice,
   ) {}
@@ -46,6 +48,16 @@ export class RegistryOfficesController {
       registry_office: RegistryOfficeViewModel.toHTTP(registry_office),
     };
   }
+  @Get('/list/')
+  async GetRegistryOffices() {
+    const { registry_offices } = await this.getRegistryOffices.execute();
+
+    return {
+      registry_offices: registry_offices.map((registryOffice) =>
+        RegistryOfficeViewModel.toHTTP(registryOffice),
+      ),
+    };
+  }
 
   @Get('/')
   async GetRegistryOfficeName(@Query('name') name: string) {
@@ -59,7 +71,6 @@ export class RegistryOfficesController {
   }
 
   @Get('/:id')
-  @Public()
   async GetRegistryOfficeId(@Param('id') id: string) {
     const { registry_office } = await this.getRegistryOfficeById.execute({
       id,

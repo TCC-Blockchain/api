@@ -55,6 +55,16 @@ export class PrismaRegistryOfficesRepository
     return registry_office;
   }
 
+  async findRegistryOffices(): Promise<RegistryOffice[] | null> {
+    const rawRegistryOffices = await this.prisma.registryOffice.findMany();
+
+    const registry_offices = rawRegistryOffices.map((registryOffice) =>
+      PrismaRegistryOfficeMapper.toDomain({ raw: registryOffice }),
+    );
+
+    return registry_offices;
+  }
+
   async deleteRegistryOffice(id: string): Promise<RegistryOffice | null> {
     const deleteRegistryOffice = await this.prisma.registryOffice.delete({
       where: {
