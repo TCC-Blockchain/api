@@ -3,33 +3,30 @@ import { RegistryOffice } from '../entities/registry-office';
 import { RegistryOfficesRepository } from '../repositories/registry-offices-repository';
 import { RegistryOfficeNotFound } from './errors/registry-office-not-found';
 
-interface GetRegistryOfficeByIdRequest {
-  id: string;
-}
+interface GetRegistryOfficesRequest {}
 
-interface GetRegistryOfficeByIdResponse {
-  registry_office: RegistryOffice;
+interface GetRegistryOfficesResponse {
+  registry_offices: RegistryOffice[];
 }
 
 @Injectable()
-export class GetRegistryOfficeById {
+export class GetRegistryOffices {
 
   constructor(private registryOfficesRepository: RegistryOfficesRepository) {}
 
   async execute(
-    request: GetRegistryOfficeByIdRequest,
-  ): Promise<GetRegistryOfficeByIdResponse> {
-    const { id } = request;
+    request: GetRegistryOfficesRequest,
+  ): Promise<GetRegistryOfficesResponse> {
 
-    const registry_office =
-      await this.registryOfficesRepository.findRegistryOfficeById(id);
+    const registry_offices =
+      await this.registryOfficesRepository.findRegistryOffices();
 
-    if (!registry_office) {
+    if (!registry_offices) {
       throw new RegistryOfficeNotFound();
     }
 
     return {
-      registry_office,
+      registry_offices,
     };
   }
 }

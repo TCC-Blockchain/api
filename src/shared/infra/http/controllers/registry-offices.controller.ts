@@ -17,6 +17,7 @@ import { Public } from '@shared/utils/public-decorator';
 import { CreateRegistryOfficeBody } from '../dtos/create-registry-office-body';
 import { UpdateRegistryOfficeBody } from '../dtos/update-registry-office-body';
 import { RegistryOfficeViewModel } from '../view-models/registry-office-view-model';
+import { GetRegistryOffices } from '@modules/registry-office/use-cases/get-registry-offices';
 
 @Controller('registry-offices')
 export class RegistryOfficesController {
@@ -24,6 +25,7 @@ export class RegistryOfficesController {
     private createRegistryOffice: CreateRegistryOffice,
     private getRegistryOfficeById: GetRegistryOfficeById,
     private getRegistryOfficeByName: GetRegistryOfficeByName,
+    private getRegistryOffices: GetRegistryOffices,
     private deleteRegistryOffice: DeleteRegistryOffice,
     private updateRegistryOffice: UpdateRegistryOffice,
   ) {}
@@ -44,6 +46,15 @@ export class RegistryOfficesController {
 
     return {
       registry_office: RegistryOfficeViewModel.toHTTP(registry_office),
+    };
+  }
+  @Get('/list/')
+  @Public()
+  async GetRegistryOffices() {
+    const { registry_offices } = await this.getRegistryOffices.execute({});
+
+    return {
+      registry_offices: registry_offices.map( registryOffice => RegistryOfficeViewModel.toHTTP(registryOffice)),
     };
   }
 
@@ -69,6 +80,8 @@ export class RegistryOfficesController {
       registry_office: RegistryOfficeViewModel.toHTTP(registry_office),
     };
   }
+
+
 
   @Delete()
   async DeleteRegistryOffice(@Param('id') id: string) {
