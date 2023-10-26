@@ -49,12 +49,13 @@ export class RegistryOfficesController {
     };
   }
   @Get('/list/')
-  @Public()
   async GetRegistryOffices() {
     const { registry_offices } = await this.getRegistryOffices.execute({});
 
     return {
-      registry_offices: registry_offices.map( registryOffice => RegistryOfficeViewModel.toHTTP(registryOffice)),
+      registry_offices: registry_offices.map((registryOffice) =>
+        RegistryOfficeViewModel.toHTTP(registryOffice),
+      ),
     };
   }
 
@@ -70,7 +71,6 @@ export class RegistryOfficesController {
   }
 
   @Get('/:id')
-  @Public()
   async GetRegistryOfficeId(@Param('id') id: string) {
     const { registry_office } = await this.getRegistryOfficeById.execute({
       id,
@@ -80,8 +80,6 @@ export class RegistryOfficesController {
       registry_office: RegistryOfficeViewModel.toHTTP(registry_office),
     };
   }
-
-
 
   @Delete()
   async DeleteRegistryOffice(@Param('id') id: string) {
