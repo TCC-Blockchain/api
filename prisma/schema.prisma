@@ -44,11 +44,12 @@ model RegistryOffice {
 }
 
 model Document {
-  id       String @id
-  hash_id  String
-  url      String
-  owner_id String
-  owner    User   @relation(fields: [owner_id], references: [id])
+  id        String @id
+  hash_id   String
+  url       String
+  file_name String
+  owner_id  String
+  owner     User   @relation(fields: [owner_id], references: [id])
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
