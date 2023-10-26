@@ -55,12 +55,12 @@ export class PrismaRegistryOfficesRepository
     return registry_office;
   }
 
-
   async findRegistryOffices(): Promise<RegistryOffice[] | null> {
-    const rawRegistryOffices = await this.prisma.registryOffice.findMany({});
+    const rawRegistryOffices = await this.prisma.registryOffice.findMany();
 
-    const registry_offices = rawRegistryOffices.map(
-      registryOffice => PrismaRegistryOfficeMapper.toDomain({raw: registryOffice}));
+    const registry_offices = rawRegistryOffices.map((registryOffice) =>
+      PrismaRegistryOfficeMapper.toDomain({ raw: registryOffice }),
+    );
 
     return registry_offices;
   }
@@ -92,5 +92,4 @@ export class PrismaRegistryOfficesRepository
       data: raw,
     });
   }
-
 }

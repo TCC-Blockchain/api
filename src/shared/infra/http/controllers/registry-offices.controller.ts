@@ -50,7 +50,7 @@ export class RegistryOfficesController {
   }
   @Get('/list/')
   async GetRegistryOffices() {
-    const { registry_offices } = await this.getRegistryOffices.execute({});
+    const { registry_offices } = await this.getRegistryOffices.execute();
 
     return {
       registry_offices: registry_offices.map((registryOffice) =>
