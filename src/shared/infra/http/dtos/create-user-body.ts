@@ -1,26 +1,26 @@
-import { IsEmail, IsNotEmpty, Length } from 'class-validator';
+interface EmailAddress {
+  email_address: string;
+  id: string;
+  object: string;
+}
 
-export class CreateUserBody {
-  @IsNotEmpty()
-  name: string;
+interface UserData {
+  birthday: string;
+  created_at: number;
+  email_addresses: EmailAddress[];
+  first_name: string;
+  gender: string;
+  id: string;
+  last_name: string;
+  profile_image_url: string;
+  username: string | null;
+  unsafe_metadata: {
+    registry_office_id: string;
+    role: string;
+  };
+  updated_at: number;
+}
 
-  @IsNotEmpty()
-  phone: string;
-
-  @IsNotEmpty()
-  @IsEmail()
-  email: string;
-
-  @IsNotEmpty()
-  @Length(5, 40)
-  username: string;
-
-  @IsNotEmpty()
-  password: string;
-
-  @IsNotEmpty()
-  document: string;
-
-  @IsNotEmpty()
-  registry_office_id: string;
+export interface CreateUserBody {
+  data: UserData;
 }

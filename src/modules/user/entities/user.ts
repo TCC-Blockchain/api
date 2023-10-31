@@ -4,11 +4,11 @@ import { Replace } from 'src/shared/helpers/Replace';
 export interface UserProps {
   id?: string;
   name: string;
-  password: string;
-  username: string;
+  username?: string;
   email: string;
   document: string;
   phone: string;
+  coins_amount: number;
   created_at: Date;
   updated_at?: Date;
   registry_office_id?: string;
@@ -46,19 +46,11 @@ export class User {
     return this.props.name;
   }
 
-  public get password(): string {
-    return this.props.password;
-  }
-
-  public set password(password: string) {
-    this.props.password = password;
-  }
-
-  public get username(): string {
+  public get username(): string | undefined {
     return this.props.username;
   }
 
-  public set username(username: string) {
+  public set username(username: string | undefined) {
     this.props.username = username;
   }
 

@@ -6,7 +6,6 @@ import { UserAlreadyExists } from './errors/user-already-exists';
 
 interface CreateUserRequest {
   name: string;
-  password: string;
   username: string;
   email: string;
   document: string;
@@ -26,15 +25,8 @@ export class CreateUser {
   ) {}
 
   async execute(request: CreateUserRequest): Promise<CreateUserResponse> {
-    const {
-      document,
-      email,
-      name,
-      password,
-      phone,
-      username,
-      registry_office_id,
-    } = request;
+    const { document, email, name, phone, username, registry_office_id } =
+      request;
 
     const alreadyExists = await this.usersRepository.findUserByEmail(email);
 
@@ -42,16 +34,14 @@ export class CreateUser {
       throw new UserAlreadyExists();
     }
 
-    const hashedPassword = await this.hashProvider.generateHash(password);
-
     const user = new User({
       username,
       name,
       email,
-      password: hashedPassword,
       phone,
       document,
       registry_office_id,
+      coins_amount: 10,
     });
 
     await this.usersRepository.create(user);
