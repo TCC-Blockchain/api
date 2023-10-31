@@ -1,5 +1,3 @@
-import { PrismaUsersTokensRepository } from '@modules/auth/infra/prisma/repositories/prisma-users-tokens-repository';
-import { UsersTokensRepository } from '@modules/auth/repositories/users-tokens-repository';
 import { PrismaUsersRepository } from '@modules/user/infra/prisma/repositories/prisma-users-repository';
 import { UsersRepository } from '@modules/user/repositories/users-repository';
 import { Module } from '@nestjs/common';
@@ -17,10 +15,6 @@ import { PrismaDocumentsRepository } from '@modules/document/infra/prisma/reposi
       useClass: PrismaUsersRepository,
     },
     {
-      provide: UsersTokensRepository,
-      useClass: PrismaUsersTokensRepository,
-    },
-    {
       provide: RegistryOfficesRepository,
       useClass: PrismaRegistryOfficesRepository,
     },
@@ -29,11 +23,6 @@ import { PrismaDocumentsRepository } from '@modules/document/infra/prisma/reposi
       useClass: PrismaDocumentsRepository,
     },
   ],
-  exports: [
-    UsersRepository,
-    UsersTokensRepository,
-    RegistryOfficesRepository,
-    DocumentsRepository,
-  ],
+  exports: [UsersRepository, RegistryOfficesRepository, DocumentsRepository],
 })
 export class DatabaseModule {}

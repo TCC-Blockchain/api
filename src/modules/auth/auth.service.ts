@@ -1,8 +1,8 @@
 import { User } from '@modules/user/entities/user';
 import { UsersRepository } from '@modules/user/repositories/users-repository';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { UserNotFound } from '@modules/user/use-cases/errors/user-not-found';
+import { Injectable } from '@nestjs/common';
 import { HashProvider } from '@providers/HashProvider/hash-provider';
-import { UserNotFound } from './use-cases/errors/user-not-found';
 
 @Injectable()
 export class AuthService {
@@ -11,20 +11,11 @@ export class AuthService {
     private readonly hashProvider: HashProvider,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<User> {
+  async validateUser(email: string): Promise<User> {
     const user = await this.usersRepository.findUserByEmail(email);
 
     if (!user) {
       throw new UserNotFound();
-    }
-
-    const hasPasswordMatched = await this.hashProvider.compareHash(
-      password,
-      user.password,
-    );
-
-    if (!hasPasswordMatched) {
-      throw new UnauthorizedException();
     }
 
     return user;

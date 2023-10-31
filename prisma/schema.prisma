@@ -73,7 +73,7 @@ model Employee {
 model User {
   id                 String          @id
   name               String
-  username           String
+  username           String?
   email              String
   document           String
   phone              String
