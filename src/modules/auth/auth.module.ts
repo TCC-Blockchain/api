@@ -9,8 +9,6 @@ import { jwtConstants } from './constants';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
-import { CreateSession } from './use-cases/create-session';
-import { RefreshToken } from './use-cases/refresh-token';
 
 @Module({
   imports: [
@@ -28,9 +26,7 @@ import { RefreshToken } from './use-cases/refresh-token';
     JwtStrategy,
     JwtService,
     { provide: APP_GUARD, useClass: JwtAuthGuard },
-    RefreshToken,
-    CreateSession,
   ],
-  exports: [AuthService, JwtService, RefreshToken, CreateSession],
+  exports: [AuthService, JwtService],
 })
 export class AuthModule {}

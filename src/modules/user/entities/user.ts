@@ -62,6 +62,14 @@ export class User {
     this.props.email = email;
   }
 
+  public get coins_amount(): number {
+    return this.props.coins_amount;
+  }
+
+  public set coins_amount(coins_amount: number) {
+    this.props.coins_amount = coins_amount;
+  }
+
   public get document(): string {
     return this.props.document;
   }
