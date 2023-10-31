@@ -6,6 +6,8 @@ import { Module } from '@nestjs/common';
 import { PrismaService } from './prisma/prisma.service';
 import { RegistryOfficesRepository } from '@modules/registry-office/repositories/registry-offices-repository';
 import { PrismaRegistryOfficesRepository } from '@modules/registry-office/infra/prisma/repositories/prisma-registry-offices-repository';
+import { DocumentsRepository } from '@modules/document/repositories/document-repository';
+import { PrismaDocumentsRepository } from '@modules/document/infra/prisma/repositories/prisma-document-repository';
 
 @Module({
   providers: [
@@ -22,7 +24,16 @@ import { PrismaRegistryOfficesRepository } from '@modules/registry-office/infra/
       provide: RegistryOfficesRepository,
       useClass: PrismaRegistryOfficesRepository,
     },
+    {
+      provide: DocumentsRepository,
+      useClass: PrismaDocumentsRepository,
+    },
   ],
-  exports: [UsersRepository, UsersTokensRepository, RegistryOfficesRepository],
+  exports: [
+    UsersRepository,
+    UsersTokensRepository,
+    RegistryOfficesRepository,
+    DocumentsRepository,
+  ],
 })
 export class DatabaseModule {}
