@@ -16,25 +16,14 @@ export class UsersController {
 
   @Post()
   @Public()
-  async create(@Body() body: CreateUserBody) {
-    const {
-      username,
-      name,
-      email,
-      password,
-      phone,
-      document,
-      registry_office_id,
-    } = body;
-
+  async create(@Body() { data }: CreateUserBody) {
     const { user } = await this.createUser.execute({
-      username,
-      name,
-      email,
-      password,
-      phone,
-      document,
-      registry_office_id,
+      username: data.username || '',
+      name: `${data.first_name} ${data.last_name}`,
+      email: data.email_addresses[0].email_address,
+      phone: '',
+      document: '',
+      registry_office_id: data.unsafe_metadata.registry_office_id,
     });
 
     return {
