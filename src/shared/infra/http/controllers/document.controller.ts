@@ -17,6 +17,8 @@ import { User } from '@modules/user/entities/user';
 import { DocumentViewModel } from '../view-models/document-view-model';
 import { UpdateDocumentBody } from '../dtos/update-document-body';
 import { DeleteDocumentById } from '@modules/document/use-cases/delete-document';
+import { Public } from '@shared/utils/public-decorator';
+import { VerifyDocumentByHash } from '@modules/document/use-cases/verify-document-by-hash';
 
 @Controller('documents')
 export class DocumentsController {
@@ -26,9 +28,11 @@ export class DocumentsController {
     private getDocumentsByOwnerId: GetDocumentByOwnerId,
     private getDocumentById: GetDocumentById,
     private deleteDocumentById: DeleteDocumentById,
+    private verifyDocumentByHash: VerifyDocumentByHash,
   ) {}
 
   @Post()
+  @Public()
   async create(
     @Body() body: CreateDocumentBody,
     @Request() request: { user: User },
@@ -39,7 +43,7 @@ export class DocumentsController {
       file_name,
       hash_id,
       url,
-      owner_id: request.user.id,
+      owner_id: 'request.user.id',
     });
 
     return {
@@ -59,6 +63,15 @@ export class DocumentsController {
 
     return {
       document: DocumentViewModel.toHTTP(document),
+    };
+  }
+
+  @Get('/validate/:hash')
+  async validateByHash(@Param('hash') hash: string) {
+    const { isValid } = await this.verifyDocumentByHash.execute({ hash });
+
+    return {
+      isValid,
     };
   }
 

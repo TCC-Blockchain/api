@@ -1,30 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { DocumentsRepository } from '../repositories/document-repository';
-import { Document } from '../entities/document';
 import { ethers } from 'ethers';
 import DocumentsContract from 'artifacts/contracts/DocumentAuthentication.sol/DocumentAuthentication.json';
 import { documentAddress } from '@shared/infra/blockchain';
 import { DocumentAlreadyStored } from './errors/document-already-stored';
 
-interface CreateDocumentRequest {
-  hash_id: string;
-  file_name: string;
-  url: string;
-  owner_id: string;
+interface VerifyDocumentByHashRequest {
+  hash: string;
 }
 
-interface CreateDocumentResponse {
-  document: Document;
+interface VerifyDocumentByHashResponse {
+  isValid: boolean;
 }
 
 @Injectable()
-export class CreateDocument {
+export class VerifyDocumentByHash {
   constructor(private documentsRepository: DocumentsRepository) {}
 
   async execute(
-    request: CreateDocumentRequest,
-  ): Promise<CreateDocumentResponse> {
-    const { hash_id, file_name, url, owner_id } = request;
+    request: VerifyDocumentByHashRequest,
+  ): Promise<VerifyDocumentByHashResponse> {
+    const { hash } = request;
 
     const provider = new ethers.providers.JsonRpcProvider();
     const signer = provider.getSigner();
@@ -34,7 +30,7 @@ export class CreateDocument {
       DocumentsContract.abi,
       signer,
     );
-    const encodedHash = Buffer.from(hash_id, 'hex');
+    const encodedHash = Buffer.from(hash, 'hex');
 
     const alreadyStored = await contract.verifyHash(encodedHash);
 
@@ -42,23 +38,10 @@ export class CreateDocument {
       throw new DocumentAlreadyStored();
     }
 
-    await contract.storeHash(`0x${hash_id}`);
-
     const isHashStored = await contract.verifyHash(encodedHash);
 
-    console.log(isHashStored, 'STORED');
-
-    const document = new Document({
-      hash_id,
-      file_name,
-      url,
-      owner_id,
-    });
-
-    await this.documentsRepository.create(document);
-
     return {
-      document,
+      isValid: isHashStored,
     };
   }
 }

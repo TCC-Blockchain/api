@@ -26,12 +26,13 @@ model Address {
 }
 
 model RegistryOffice {
-  id          String @id
+  id          String  @id
   name        String
   logo        String
   description String
   document    String
   phone       String
+  slug        String?
 
   clients   User[]
   employees Employee[]
