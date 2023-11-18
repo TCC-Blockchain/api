@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { RegistryOffice } from '../entities/registry-office';
 import { RegistryOfficesRepository } from '../repositories/registry-offices-repository';
 import { RegistryOfficeAlreadyExists } from './errors/registry-office-already-exists';
+import { createSlug } from '@shared/utils/generate-slug';
 
 interface CreateRegistryOfficeRequest {
   name: string;
@@ -38,6 +39,7 @@ export class CreateRegistryOffice {
       description,
       address_id,
       document,
+      slug: createSlug(name),
       phone,
     });
 
