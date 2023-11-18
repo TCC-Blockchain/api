@@ -11,6 +11,7 @@ export interface RegistryOfficeProps {
   address?: Address;
   document: string;
   phone: string;
+  slug: string;
   created_at: Date;
   updated_at?: Date;
 }
@@ -53,6 +54,14 @@ export class RegistryOffice {
 
   public get logo(): string {
     return this.props.logo;
+  }
+
+  public set slug(slug: string) {
+    this.props.slug = slug;
+  }
+
+  public get slug(): string {
+    return this.props.slug;
   }
 
   public set description(description: string) {

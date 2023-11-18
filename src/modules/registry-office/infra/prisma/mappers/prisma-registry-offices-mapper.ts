@@ -13,6 +13,7 @@ export class PrismaRegistryOfficeMapper {
       phone: registry_office.phone,
       created_at: registry_office.created_at,
       updated_at: registry_office.updated_at,
+      slug: registry_office.slug,
     };
   }
 
@@ -27,6 +28,7 @@ export class PrismaRegistryOfficeMapper {
         phone: raw.phone,
         created_at: raw.created_at,
         updated_at: raw.updated_at,
+        slug: raw.slug,
       },
       raw.id,
     );
