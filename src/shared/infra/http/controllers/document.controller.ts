@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   Body,
   Controller,
@@ -13,12 +14,14 @@ import { CreateDocument } from '@modules/document/use-cases/create-document';
 import { GetDocumentByOwnerId } from '@modules/document/use-cases/get-by-owner-id';
 import { GetDocumentById } from '@modules/document/use-cases/get-by-id';
 import { UpdateDocument } from '@modules/document/use-cases/update-document';
-import { User } from '@modules/user/entities/user';
 import { DocumentViewModel } from '../view-models/document-view-model';
 import { UpdateDocumentBody } from '../dtos/update-document-body';
 import { DeleteDocumentById } from '@modules/document/use-cases/delete-document';
 import { Public } from '@shared/utils/public-decorator';
 import { VerifyDocumentByHash } from '@modules/document/use-cases/verify-document-by-hash';
+import { Request as ExpressRequest } from 'express';
+import { GetDocumentsByOwnerEmail } from '@modules/document/use-cases/get-by-owner-email';
+import { getUserFromRequest } from '@shared/utils/get-user-from-request';
 
 @Controller('documents')
 export class DocumentsController {
@@ -29,21 +32,24 @@ export class DocumentsController {
     private getDocumentById: GetDocumentById,
     private deleteDocumentById: DeleteDocumentById,
     private verifyDocumentByHash: VerifyDocumentByHash,
+    private getDocumentsByOwnerEmail: GetDocumentsByOwnerEmail,
   ) {}
 
   @Post()
   @Public()
   async create(
     @Body() body: CreateDocumentBody,
-    @Request() request: { user: User },
+    @Request() request: ExpressRequest,
   ) {
+    const user = await getUserFromRequest(request);
+
     const { file_name, hash_id, url } = body;
 
     const { document } = await this.createDocument.execute({
       file_name,
       hash_id,
       url,
-      owner_id: 'request.user.id',
+      owner_email: user.emailAddresses[0].emailAddress,
     });
 
     return {
@@ -72,6 +78,21 @@ export class DocumentsController {
 
     return {
       isValid,
+    };
+  }
+
+  @Get('/owner')
+  async getByCurrentOwner(@Request() request: ExpressRequest) {
+    const user = await getUserFromRequest(request);
+
+    const { documents } = await this.getDocumentsByOwnerEmail.execute({
+      email: user.emailAddresses[0].emailAddress,
+    });
+
+    return {
+      documents: documents.map((document) =>
+        DocumentViewModel.toHTTP(document),
+      ),
     };
   }
 
