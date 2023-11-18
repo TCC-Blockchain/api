@@ -13,11 +13,11 @@ module.exports = {
     },
     mumbai: {
       url: `https://polygon-mainnet.infura.io/v3/${process.env.PRIVATE_KEY}`,
-      accounts: [process.env.METAMASK_KEY],
+      accounts: [process.env.METAMASK_KEY || ''],
     },
     mainnet: {
       url: ``,
-      accounts: [process.env.METAMASK_KEY],
+      accounts: [process.env.METAMASK_KEY || ''],
     },
   },
   etherscan: {
