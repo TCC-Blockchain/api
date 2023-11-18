@@ -20,7 +20,7 @@ jobs:
       - name: Generate .env
         run: |
           touch .env
-          echo METAMASK_KEY: 'secrets.METAMASK_KEY' >> .env
+          echo METAMASK_KEY: '${{ secrets.METAMASK_KEY }}' >> .env
           cat .env
 
       - name: Install Dependencies
