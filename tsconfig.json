@@ -1,4 +1,7 @@
 {
+  "exclude": ["dist", "node_modules"],
+  "include": ["./test", "./src", "./scripts"],
+  "files": ["./hardhat.config.ts"],
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
@@ -21,6 +24,7 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "esModuleInterop": true,
+    "rootDirs": ["./src", "./scripts", "./test"],
     "paths": {
       "@modules/*": ["./src/modules/*"],
       "@helpers/*": ["./src/shared/helpers/*"],

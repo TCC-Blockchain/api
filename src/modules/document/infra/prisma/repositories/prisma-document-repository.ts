@@ -31,7 +31,21 @@ export class PrismaDocumentsRepository implements DocumentsRepository {
     });
   }
 
-  async findByOwnerId(id: string): Promise<Document[] | null> {
+  async findByOwnerEmail(id: string): Promise<Document[]> {
+    const raws = await this.prisma.document.findMany({
+      where: {
+        owner_id: id,
+      },
+    });
+
+    const documents = raws.map((document) =>
+      PrismaDocumentMapper.toDomain({ raw: document }),
+    );
+
+    return documents;
+  }
+
+  async findByOwnerId(id: string): Promise<Document[]> {
     const raws = await this.prisma.document.findMany({
       where: {
         owner_id: id,

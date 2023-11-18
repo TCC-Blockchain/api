@@ -32,6 +32,7 @@ model RegistryOffice {
   description String
   document    String
   phone       String
+  slug        String
 
   clients   User[]
   employees Employee[]
