@@ -12,12 +12,10 @@ module.exports = {
       chainId: 1337,
     },
     mumbai: {
-      url: `https://polygon-mainnet.infura.io/v3/${process.env.PRIVATE_KEY}`,
-      accounts: [process.env.METAMASK_KEY || ''],
-    },
-    mainnet: {
-      url: ``,
-      accounts: [process.env.METAMASK_KEY || ''],
+      url: 'https://polygon-mumbai.infura.io/v3/4997067c753b4172b284d25af2d30649',
+      accounts: [
+        '6f305204f284a01213cd1e06e7b995113f8ea8b3fbe078c595aafccd6b122f38',
+      ],
     },
   },
   etherscan: {

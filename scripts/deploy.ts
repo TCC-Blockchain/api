@@ -1,20 +1,19 @@
 import { ethers } from 'hardhat';
+import fs from 'fs';
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
-
-  const lockedAmount = ethers.utils.parseEther('0.001');
-
   const Contract = await ethers.getContractFactory('DocumentAuthentication');
   const contract = await Contract.deploy();
 
   await contract.deployed();
 
+  fs.writeFileSync(
+    './src/shared/infra/blockchain/index.ts',
+    `export const documentAddress = '${contract.address}';`,
+  );
+
   console.log(
-    `Lock with ${ethers.utils.formatEther(
-      lockedAmount,
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${contract.address}`,
+    `Lock with ETH and unlock timestamp deployed to ${contract.address}`,
   );
 }
 
