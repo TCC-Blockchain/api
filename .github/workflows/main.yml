@@ -21,6 +21,11 @@ jobs:
         run: |
           touch .env
           echo METAMASK_KEY: '${{ secrets.METAMASK_KEY }}' >> .env
+          echo DATABASE_URL: '${{ secrets.DATABASE_URL }}' >> .env
+          echo POLYGONSCAN_API_KEY: '${{ secrets.POLYGONSCAN_API_KEY }}' >> .env
+          echo PRIVATE_KEY: '${{ secrets.PRIVATE_KEY }}' >> .env
+          echo CLERK_SECRET_KEY: '${{ secrets.CLERK_SECRET_KEY }}' >> .env
+          echo CLERK_PEM_PUBLIC_KEY: '${{ secrets.CLERK_PEM_PUBLIC_KEY }}' >> .env
           cat .env
 
       - name: Install Dependencies
