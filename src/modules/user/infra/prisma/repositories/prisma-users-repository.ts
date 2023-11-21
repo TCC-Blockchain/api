@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { PrismaService } from '@infra/database/prisma/prisma.service';
 import { User } from '@modules/user/entities/user';
 import { UsersRepository } from '@modules/user/repositories/users-repository';
@@ -50,5 +51,19 @@ export class PrismaUsersRepository implements UsersRepository {
     });
 
     return user;
+  }
+
+  async update(user: User): Promise<void> {
+    const rawUser = PrismaUserMapper.toPrisma(user);
+
+    // @ts-ignore
+    delete rawUser.id;
+
+    await this.prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: rawUser,
+    });
   }
 }

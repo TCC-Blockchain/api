@@ -62,6 +62,10 @@ export class User {
     this.props.email = email;
   }
 
+  public decrease_coins(coins: number) {
+    this.props.coins_amount -= coins;
+  }
+
   public get coins_amount(): number {
     return this.props.coins_amount;
   }

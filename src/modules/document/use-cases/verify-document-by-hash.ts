@@ -3,7 +3,8 @@ import { DocumentsRepository } from '../repositories/document-repository';
 import { ethers } from 'ethers';
 import DocumentsContract from 'artifacts/contracts/DocumentAuthentication.sol/DocumentAuthentication.json';
 import { documentAddress } from '@shared/infra/blockchain';
-import { DocumentAlreadyStored } from './errors/document-already-stored';
+import { DocumentNotFound } from './errors/document-not-found';
+import { UsersRepository } from '@modules/user/repositories/users-repository';
 
 interface VerifyDocumentByHashRequest {
   hash: string;
@@ -15,7 +16,10 @@ interface VerifyDocumentByHashResponse {
 
 @Injectable()
 export class VerifyDocumentByHash {
-  constructor(private documentsRepository: DocumentsRepository) {}
+  constructor(
+    private documentsRepository: DocumentsRepository,
+    private usersRepository: UsersRepository,
+  ) {}
 
   async execute(
     request: VerifyDocumentByHashRequest,
@@ -34,11 +38,23 @@ export class VerifyDocumentByHash {
 
     const alreadyStored = await contract.verifyHash(encodedHash);
 
-    if (alreadyStored) {
-      throw new DocumentAlreadyStored();
+    if (!alreadyStored) {
+      throw new DocumentNotFound();
     }
 
     const isHashStored = await contract.verifyHash(encodedHash);
+
+    const user = await this.usersRepository.findUserByEmail(
+      'lecirics@gmail.com',
+    );
+
+    if (!user) {
+      throw new DocumentNotFound();
+    }
+
+    user.decrease_coins(2);
+
+    this.usersRepository.update(user);
 
     return {
       isValid: isHashStored,

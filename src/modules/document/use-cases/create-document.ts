@@ -55,11 +55,13 @@ export class CreateDocument {
       DocumentsContract.abi,
       signer,
     );
+
     const encodedHash = Buffer.from(hash_id, 'hex');
 
     const alreadyStored = await contract.verifyHash(encodedHash);
 
     if (alreadyStored) {
+      await this.documentsRepository.delete(document.id);
       throw new DocumentAlreadyStored();
     }
 
@@ -70,6 +72,10 @@ export class CreateDocument {
     if (!isHashStored) {
       throw new StoreError();
     }
+
+    user.decrease_coins(10);
+
+    this.usersRepository.update(user);
 
     return {
       document,

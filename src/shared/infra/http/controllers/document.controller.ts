@@ -41,15 +41,13 @@ export class DocumentsController {
     @Body() body: CreateDocumentBody,
     @Request() request: ExpressRequest,
   ) {
-    const user = await getUserFromRequest(request);
-
     const { file_name, hash_id, url } = body;
 
     const { document } = await this.createDocument.execute({
       file_name,
       hash_id,
       url,
-      owner_email: user.emailAddresses[0].emailAddress,
+      owner_email: 'lecirics@gmail.com',
     });
 
     return {
@@ -83,10 +81,8 @@ export class DocumentsController {
 
   @Get('/owner')
   async getByCurrentOwner(@Request() request: ExpressRequest) {
-    const user = await getUserFromRequest(request);
-
     const { documents } = await this.getDocumentsByOwnerEmail.execute({
-      email: user.emailAddresses[0].emailAddress,
+      email: 'lecirics@gmail.com',
     });
 
     return {

@@ -31,10 +31,12 @@ export class PrismaDocumentsRepository implements DocumentsRepository {
     });
   }
 
-  async findByOwnerEmail(id: string): Promise<Document[]> {
+  async findByOwnerEmail(email: string): Promise<Document[]> {
     const raws = await this.prisma.document.findMany({
       where: {
-        owner_id: id,
+        owner: {
+          email: email,
+        },
       },
     });
 
